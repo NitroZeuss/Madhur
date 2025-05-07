@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vrwjqi5e@)qd+0@)1*nv33g&dq@_ibhehlphk%bl41ywg$*8$4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -37,11 +40,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'function',
+    'rest_framework',
+    'cloudinary',
+    'cloudinary_storage',
+    'corsheaders',
 ]
+
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -69,14 +83,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'madhur.wsgi.application'
 
+import os
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'defaultdb',
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_kw2-Iiadx_MyvURJZZ3',
+        'HOST': 'mysql-91b4d53-madhurcaterersnagpur-b4c4.e.aivencloud.com',  # Use the external IP or hostname
+        'PORT': '14847',  # Default MySQL port
+        'ssl': {
+                'ca': os.path.join(BASE_DIR, 'certs', 'cert.pem'),
+            }
     }
 }
 
@@ -121,3 +143,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api	
+cloudinary.config( 
+  	cloud_name = "dxtkvs2an",
+  	api_key = "915888716122675",
+  	api_secret = "yYP0xmF3rwfOg5jrLUkb6xfifSE"
+)
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # your frontend URL
+    # add more if needed
+]
