@@ -90,17 +90,12 @@ import os
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'defaultdb',
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_kw2-Iiadx_MyvURJZZ3',
-        'HOST': 'mysql-91b4d53-madhurcaterersnagpur-b4c4.e.aivencloud.com',  # Use the external IP or hostname
-        'PORT': '14847',  # Default MySQL port
-        'ssl': {
-                'ca': os.path.join(BASE_DIR, 'certs', 'cert.pem'),
-            }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
